@@ -37,14 +37,11 @@ servers: # List of servers where the APIs are hosted
     description: Staging server
   - url: https://api.eazyshop-server.com/v1
     description: Production server
-  - url: {protocol}://{hostname}:{port}/{version}
+  - url: http://127.0.0.1:8080
+    description: localhost server
+  - url: https://{username}.server.com:{port}/{version}
     variables:
-      protocol:
-        enum:
-          - "http"
-          - "https"
-        default: "https"
-      hostname:
+      username:
         default: demo
         description: |
           **This value is assigned by the service provider.**
@@ -52,12 +49,9 @@ servers: # List of servers where the APIs are hosted
         enum:
           - "8443"
           - "443"
-          - "8080"
         default: "8443"
       version:
         default: v1
-        description: |
-          **This value is assigned by the service provider.**
 tags:
   - name: Categories
     description: |
@@ -595,11 +589,10 @@ components:
     GetOrderByOrderId:
       description: >
         The `orderId` value returned in the response can be used as input parameter in `GET /orders`.
-
-
       operationId: getOrderDetails
       parameters:
         orderId: "$response.body#/orderId"
+
   securitySchemes:
     BasicAuth:
       type: http
