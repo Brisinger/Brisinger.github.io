@@ -37,9 +37,13 @@ servers: # List of servers where the APIs are hosted
     description: Staging server
   - url: https://api.eazyshop-server.com/v1
     description: Production server
-  - url: https://{username}.server.com:{port}/{version}
+  - url: {protocol}://{hostname}:{port}/{version}
     variables:
-      username:
+      protocol:
+        - "http"
+        - "https"
+        default: "https"
+      hostname:
         default: demo
         description: |
           **This value is assigned by the service provider.**
@@ -47,9 +51,12 @@ servers: # List of servers where the APIs are hosted
         enum:
           - "8443"
           - "443"
+          - "8080"
         default: "8443"
       version:
         default: v1
+        description: |
+          **This value is assigned by the service provider.**
 tags:
   - name: Categories
     description: |
@@ -200,6 +207,15 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Product"
+              examples:
+                product-data:
+                  summary: Product details
+                  value:
+                    productId: 101
+                    name: Apple IPhone 13 Pro
+                    price: 999.99
+                    categoryName: Mobiles
+                    quantity: 96
         "500":
           $ref: "#/components/responses/InternalServerError"
   /orders: # Orders API endpoint
