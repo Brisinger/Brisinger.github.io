@@ -40,8 +40,9 @@ servers: # List of servers where the APIs are hosted
   - url: {protocol}://{hostname}:{port}/{version}
     variables:
       protocol:
-        - "http"
-        - "https"
+        enum:
+          - "http"
+          - "https"
         default: "https"
       hostname:
         default: demo
